@@ -1,0 +1,73 @@
+# WESAD Project Configuration
+# Both partners should use this config file to avoid hardcoded paths
+
+# Data paths
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+
+# Preprocessing parameters
+preprocessing:
+  window_size: 60  # seconds
+  step_size: 30    # seconds
+
+# Sampling rates (Hz)
+sampling_rates:
+  chest: 700
+  wrist_bvp: 64
+  wrist_eda: 4
+  wrist_acc: 32
+  wrist_temp: 4
+
+# Feature extraction
+features:
+  hrv_features: true
+  eda_features: true
+  acc_features: true
+  temp_features: true
+
+# Model training
+training:
+  validation_strategy: "loso"  # Leave-One-Subject-Out
+  random_state: 42
+  n_jobs: -1  # Use all CPUs
+
+# Model hyperparameters (starting points)
+models:
+  random_forest:
+    n_estimators: 100
+    max_depth: 10
+    min_samples_split: 5
+
+  xgboost:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+
+# Labels
+labels:
+  relevant: [1, 2, 3, 4]  # baseline, stress, amusement, meditation
+
+  # Binary classification: stress (1) vs non-stress (0)
+  binary_mapping:
+    1: 0  # baseline -> non-stress
+    2: 1  # stress -> stress
+    3: 0  # amusement -> non-stress
+    4: 0  # meditation -> non-stress
+
+  binary_names:
+    0: "non-stress"
+    1: "stress"
+
+  names:
+    0: "transient"
+    1: "baseline"
+    2: "stress"
+    3: "amusement"
+    4: "meditation"
+
+# Results tracking
+results:
+  output_dir: "results"
+  save_plots: true
+  save_metrics: true
