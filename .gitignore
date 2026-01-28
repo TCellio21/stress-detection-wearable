@@ -29,7 +29,7 @@ ENV/
 .ipynb_checkpoints
 *.ipynb_checkpoints/
 
-# Data (large files) - ignore entire data directory
+# Data (large files)
 data/
 *.pkl
 *.csv
@@ -39,6 +39,12 @@ data/
 *.npz
 *.h5
 *.parquet
+
+# Dataset - ignore raw data but keep READMEs
+dataset/raw/S*/
+!dataset/raw/README.md
+!dataset/processed/README.md
+!dataset/metadata/README.md
 
 # Models (large files)
 models/*.pkl
