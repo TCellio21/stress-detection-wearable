@@ -1,0 +1,71 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# Data (large files) - ignore entire data directory
+data/
+*.pkl
+*.csv
+*.zip
+*.edf
+*.npy
+*.npz
+*.h5
+*.parquet
+
+# Models (large files)
+models/*.pkl
+models/*.h5
+models/*.pt
+models/*.pth
+models/*.onnx
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Results (ignore entire results directory)
+results/
+
+# Temporary files
+tmp/
+temp/
+*.tmp

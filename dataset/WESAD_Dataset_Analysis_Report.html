@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WESAD Dataset Comprehensive Analysis Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        h4 {
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: white;
+            border-bottom: 3px solid white;
+            margin: 0;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        .info-box {
+            background-color: #e8f4f8;
+            border-left: 5px solid #3498db;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success-box {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+        pre code {
+            background-color: transparent;
+            color: #f8f8f2;
+            padding: 0;
+        }
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .key-point {
+            font-weight: 600;
+            color: #2980b9;
+        }
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+            text-align: center;
+            color: #7f8c8d;
+        }
+        @media print {
+            body {
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>WESAD Dataset Comprehensive Analysis Report</h1>
+            <p>Wearable Stress and Affect Detection for PPG-Based HRV Analysis</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Project: Rule-Based Stress Detection for Children with Self-Regulation Issues</p>
+        </div>
+
+        <div class="info-box">
+            <strong>Purpose:</strong> This report provides a comprehensive analysis of the WESAD dataset to support the development and validation of a rule-based stress detection model using PPG signals from wrist-worn devices.
+        </div>
+
+        <h2>Table of Contents</h2>
+        <ol>
+            <li><a href="#overview">Dataset Overview</a></li>
+            <li><a href="#ground-truth">Ground Truth Labeling Methodology</a></li>
+            <li><a href="#protocol">Experimental Protocol Details</a></li>
+            <li><a href="#sensors">Sensor Synchronization and Validation</a></li>
+            <li><a href="#structure">Data Structure and Accessibility</a></li>
+            <li><a href="#questions">Answers to Key Questions</a></li>
+            <li><a href="#extraction">Data Extraction Plan</a></li>
+            <li><a href="#validation">Validation Strategy</a></li>
+            <li><a href="#code">Code Structure Recommendations</a></li>
+            <li><a href="#summary">Summary and Next Steps</a></li>
+        </ol>
+
+        <div class="section" id="overview">
+            <h2>1. Dataset Overview</h2>
+
+            <div class="success-box">
+                <strong>WESAD (Wearable Stress and Affect Detection)</strong> is a publicly available multimodal dataset featuring physiological and motion data recorded from both wrist and chest-worn devices during a controlled laboratory study.
+            </div>
+
+            <h3>Key Characteristics</h3>
+            <ul>
+                <li><strong>Participants:</strong> 15 subjects (age 24-35, median 27 years)</li>
+                <li><strong>Duration:</strong> ~2 hours per session (excluding preparation and recovery)</li>
+                <li><strong>Devices:</strong> RespiBAN (chest) and Empatica E4 (wrist)</li>
+                <li><strong>Affective States:</strong> Baseline, Stress (TSST), Amusement, Meditation</li>
+                <li><strong>Sensor Modalities:</strong> ECG, PPG (BVP), EDA, EMG, Respiration, Temperature, Acceleration</li>
+            </ul>
+
+            <h3>Performance Benchmarks</h3>
+            <ul>
+                <li><strong>Binary Classification</strong> (stress vs. non-stress): Up to <span class="key-point">93% accuracy</span></li>
+                <li><strong>3-Class Classification</strong> (baseline vs. stress vs. amusement): Up to <span class="key-point">80% accuracy</span></li>
+            </ul>
+
+            <h3>Access Information</h3>
+            <ul>
+                <li><strong>Repository:</strong> UCI Machine Learning Repository</li>
+                <li><strong>DOI:</strong> <a href="https://doi.org/10.24432/C57K5T">https://doi.org/10.24432/C57K5T</a></li>
+                <li><strong>Direct Download:</strong> <a href="https://uni-siegen.sciebo.de/s/HGdUkoNlW1Ub0Gx">https://uni-siegen.sciebo.de/s/HGdUkoNlW1Ub0Gx</a></li>
+                <li><strong>Original Paper:</strong> Schmidt et al., ICMI 2018</li>
+            </ul>
+        </div>
+
+        <div class="section" id="ground-truth">
+            <h2>2. Ground Truth Labeling Methodology</h2>
+
+            <h3>How Stress Was Defined</h3>
+
+            <div class="warning-box">
+                <strong>Important:</strong> Ground truth labels are based on <span class="key-point">experimental protocol timing</span>, NOT on real-time physiological markers or continuous self-reports during recording.
+            </div>
+
+            <h4>Label Definitions (Sampled at 700 Hz)</h4>
+            <table>
+                <tr>
+                    <th>Label ID</th>
+                    <th>State</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>0</code></td>
+                    <td>Transient</td>
+                    <td>Not defined / Transition periods (should be excluded)</td>
+                </tr>
+                <tr>
+                    <td><code>1</code></td>
+                    <td>Baseline</td>
+                    <td>Neutral state - reading magazines</td>
+                </tr>
+                <tr>
+                    <td><code>2</code></td>
+                    <td>Stress</td>
+                    <td>TSST period (preparation + speech + arithmetic)</td>
+                </tr>
+                <tr>
+                    <td><code>3</code></td>
+                    <td>Amusement</td>
+                    <td>Watching funny video clips</td>
+                </tr>
+                <tr>
+                    <td><code>4</code></td>
+                    <td>Meditation</td>
+                    <td>Meditation/recovery periods</td>
+                </tr>
+                <tr>
+                    <td><code>5/6/7</code></td>
+                    <td>-</td>
+                    <td>Should be ignored</td>
+                </tr>
+            </table>
+
+            <h3>Labeling Granularity</h3>
+            <ul>
+                <li><strong>Multi-class:</strong> Four primary affective states (baseline, stress, amusement, meditation)</li>
+                <li><strong>Binary:</strong> Often simplified to stress (label 2) vs. non-stress (labels 1, 3, 4)</li>
+                <li><strong>Sample-level labels:</strong> Every sample labeled at 700 Hz (chest device sampling rate)</li>
+                <li><strong>High-frequency labeling:</strong> Continuous throughout ~2 hour session</li>
+            </ul>
+
+            <h3>Subjective Ratings</h3>
+            <ul>
+                <li><strong>Questionnaires:</strong> STAI (State-Trait Anxiety Inventory), PANAS (Positive and Negative Affect Schedule), SAM (Self-Assessment Manikin)</li>
+                <li><strong>Timing:</strong> Administered before/after conditions, not continuously during recording</li>
+                <li><strong>Purpose:</strong> Validate protocol effectiveness, not used for continuous labeling</li>
+                <li><strong>Access:</strong> Included in <code>quest</code> field of subject pickle files</li>
+            </ul>
+
+            <h3>Temporal Resolution</h3>
+            <ul>
+                <li><strong>High-resolution:</strong> 700 Hz for chest sensors</li>
+                <li><strong>Continuous labeling:</strong> Throughout entire session</li>
+                <li><strong>Condition-based:</strong> Labels mark entire experimental periods, not moment-to-moment variations</li>
+            </ul>
+        </div>
+
+        <div class="section" id="protocol">
+            <h2>3. Experimental Protocol Details</h2>
+
+            <h3>Study Timeline</h3>
+            <table>
+                <tr>
+                    <th>Phase</th>
+                    <th>Duration</th>
+                    <th>Label ID</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><strong>Baseline</strong></td>
+                    <td>20 minutes</td>
+                    <td>1</td>
+                    <td>Standing/sitting, reading magazines (neutral state)</td>
+                </tr>
+                <tr>
+                    <td><strong>Meditation 1</strong></td>
+                    <td>~7-10 min</td>
+                    <td>4</td>
+                    <td>First meditation period</td>
+                </tr>
+                <tr>
+                    <td><strong>TSST (Stress)</strong></td>
+                    <td>~25 min total</td>
+                    <td>2</td>
+                    <td>
+                        • 10 min preparation/anticipation<br>
+                        • 5 min speech task<br>
+                        • 5 min mental arithmetic<br>
+                        • ~5 min post-test
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Meditation 2</strong></td>
+                    <td>~7-10 min</td>
+                    <td>4</td>
+                    <td>Second meditation (recovery)</td>
+                </tr>
+                <tr>
+                    <td><strong>Amusement</strong></td>
+                    <td>~15 minutes</td>
+                    <td>3</td>
+                    <td>Watching 11 funny video clips</td>
+                </tr>
+                <tr>
+                    <td><strong>Recovery</strong></td>
+                    <td>Variable</td>
+                    <td>-</td>
+                    <td>Post-study (not included in analysis)</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <strong>Note:</strong> The order of stress and amusement conditions was counterbalanced across subjects to avoid order effects.
+            </div>
+
+            <h3>TSST (Trier Social Stress Test) Implementation</h3>
+
+            <div class="success-box">
+                The TSST is a <strong>gold-standard validated protocol</strong> for inducing psychological stress in laboratory settings, widely used in stress research.
+            </div>
+
+            <h4>Components</h4>
+            <ol>
+                <li><strong>Preparation Phase (10 minutes):</strong>
+                    <ul>
+                        <li>Participant told about upcoming speech task</li>
+                        <li>No notes allowed during presentation</li>
+                        <li>Builds anticipatory stress</li>
+                    </ul>
+                </li>
+                <li><strong>Speech Task (5 minutes):</strong>
+                    <ul>
+                        <li>Mock job interview presentation</li>
+                        <li>Performed in front of non-responsive panel</li>
+                        <li>Social-evaluative threat</li>
+                    </ul>
+                </li>
+                <li><strong>Mental Arithmetic (5 minutes):</strong>
+                    <ul>
+                        <li>Count backwards by 13 from 1,687</li>
+                        <li>Restarted on errors</li>
+                        <li>Cognitive load + pressure</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>Key Stressors</h4>
+            <ul>
+                <li>Social-evaluative threat (being judged)</li>
+                <li>Uncontrollability (cannot predict panel's reactions)</li>
+                <li>Unpredictability (surprise elements)</li>
+                <li>Non-responsive judges (no feedback or encouragement)</li>
+            </ul>
+
+            <h3>Participant Information</h3>
+            <ul>
+                <li><strong>N = 15 subjects</strong></li>
+                <li><strong>Age range:</strong> 24-35 years (median 27, mean 27.5 ± 2.4)</li>
+                <li><strong>Setting:</strong> Controlled laboratory environment</li>
+                <li><strong>Activities:</strong> Primarily stationary (sitting/standing)</li>
+            </ul>
+        </div>
+
+        <div class="section" id="sensors">
+            <h2>4. Sensor Synchronization and Validation</h2>
+
+            <h3>Device Configuration</h3>
+
+            <h4>Chest Device (RespiBAN Professional)</h4>
+            <table>
+                <tr>
+                    <th>Signal</th>
+                    <th>Sampling Rate</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>ECG</td>
+                    <td>700 Hz</td>
+                    <td>Electrocardiogram - <strong>HRV ground truth</strong></td>
+                </tr>
+                <tr>
+                    <td>EDA</td>
+                    <td>700 Hz</td>
+                    <td>Electrodermal activity</td>
+                </tr>
+                <tr>
+                    <td>EMG</td>
+                    <td>700 Hz</td>
+                    <td>Electromyogram (trapezius muscle)</td>
+                </tr>
+                <tr>
+                    <td>Respiration</td>
+                    <td>700 Hz</td>
+                    <td>Breathing rate and depth</td>
+                </tr>
+                <tr>
+                    <td>Temperature</td>
+                    <td>700 Hz</td>
+                    <td>Body temperature</td>
+                </tr>
+                <tr>
+                    <td>Acceleration</td>
+                    <td>700 Hz</td>
+                    <td>3-axis accelerometer</td>
+                </tr>
+            </table>
+
+            <h4>Wrist Device (Empatica E4)</h4>
+            <table>
+                <tr>
+                    <th>Signal</th>
+                    <th>Sampling Rate</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>BVP (PPG)</td>
+                    <td>64 Hz</td>
+                    <td>Blood volume pulse - <strong>Primary signal for wrist HRV</strong></td>
+                </tr>
+                <tr>
+                    <td>EDA</td>
+                    <td>4 Hz</td>
+                    <td>Electrodermal activity</td>
+                </tr>
+                <tr>
+                    <td>Temperature</td>
+                    <td>4 Hz</td>
+                    <td>Skin temperature</td>
+                </tr>
+                <tr>
+                    <td>Acceleration</td>
+                    <td>32 Hz</td>
+                    <td>3-axis accelerometer</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <strong>Placement:</strong> Empatica E4 worn on <strong>non-dominant hand</strong>
+            </div>
+
+            <h3>Synchronization Details</h3>
+            <ul>
+                <li><strong>Method:</strong> Devices synchronized during data collection</li>
+                <li><strong>Labels:</strong> Aligned at 700 Hz (chest sensor timing)</li>
+                <li><strong>Documentation:</strong> Subject-specific synchronization details in README files</li>
+                <li><strong>Downsampling:</strong> Wrist signals require label downsampling to match sampling rates (e.g., 700 Hz → 64 Hz for BVP)</li>
+            </ul>
+
+            <h3>Quality Indicators</h3>
+
+            <div class="success-box">
+                <strong>Chest ECG (700 Hz)</strong> serves as the <strong>gold standard ground truth</strong> for HRV validation due to its high sampling rate and direct cardiac measurement.
+            </div>
+
+            <h4>Known Limitations</h4>
+            <table>
+                <tr>
+                    <th>Issue</th>
+                    <th>Impact</th>
+                    <th>Mitigation</th>
+                </tr>
+                <tr>
+                    <td>Wrist low sampling rate</td>
+                    <td>4 Hz EDA limits temporal resolution</td>
+                    <td>Focus on BVP (64 Hz) for HRV analysis</td>
+                </tr>
+                <tr>
+                    <td>Motion artifacts</td>
+                    <td>More problematic for wrist than chest</td>
+                    <td>Use accelerometer to detect/exclude motion periods</td>
+                </tr>
+                <tr>
+                    <td>Lab environment</td>
+                    <td>Stationary activities minimize motion</td>
+                    <td>Results may not generalize to free-living</td>
+                </tr>
+                <tr>
+                    <td>PPG vasoconstriction</td>
+                    <td>Stress may reduce peripheral blood flow</td>
+                    <td>Validate wrist HRV against chest ECG during stress</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section" id="structure">
+            <h2>5. Data Structure and Accessibility</h2>
+
+            <h3>File Organization</h3>
+            <pre><code>WESAD/
+├── S2/
+│   ├── S2.pkl          # Subject 2 data (pickle file)
+│   ├── S2_readme.txt   # Subject-specific notes
+│   └── S2_quest.csv    # Questionnaire responses
+├── S3/
+│   ├── S3.pkl
+│   └── ...
+├── ...
+├── S17/
+└── README.pdf          # Complete dataset documentation</code></pre>
+
+            <div class="info-box">
+                <strong>Subject IDs:</strong> S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S13, S14, S15, S16, S17<br>
+                <strong>Note:</strong> 15 subjects total (IDs skip S1 and S12 - likely pilot or excluded data)
+            </div>
+
+            <h3>Pickle File Structure</h3>
+            <pre><code>{
+    'signal': {
+        'chest': {
+            'ACC': ndarray,      # 3-axis acceleration (700 Hz)
+            'ECG': ndarray,      # Electrocardiogram (700 Hz)
+            'EDA': ndarray,      # Electrodermal activity (700 Hz)
+            'EMG': ndarray,      # Electromyogram (700 Hz)
+            'Resp': ndarray,     # Respiration (700 Hz)
+            'Temp': ndarray      # Temperature (700 Hz)
+        },
+        'wrist': {
+            'ACC': ndarray,      # 3-axis acceleration (32 Hz)
+            'BVP': ndarray,      # Blood volume pulse / PPG (64 Hz)
+            'EDA': ndarray,      # Electrodermal activity (4 Hz)
+            'TEMP': ndarray      # Temperature (4 Hz)
+        }
+    },
+    'label': ndarray,            # Labels at 700 Hz (0-4)
+    'subject': str,              # Subject ID (e.g., 'S2')
+    'quest': dict                # Questionnaire responses (STAI, PANAS, SAM)
+}</code></pre>
+
+            <h3>Loading Data with Python</h3>
+            <pre><code>import pickle
+
+def load_wesad_subject(subject_id):
+    """Load WESAD data for a single subject."""
+    filepath = f'./data/WESAD/{subject_id}/{subject_id}.pkl'
+
+    with open(filepath, 'rb') as f:
+        data = pickle.load(f, encoding='latin1')
+
+    return data
+
+# Example usage
+data = load_wesad_subject('S2')
+ppg = data['signal']['wrist']['BVP']
+labels = data['label']
+questionnaires = data['quest']</code></pre>
+
+            <h3>Alternative Access Method</h3>
+            <pre><code>from ucimlrepo import fetch_ucirepo
+
+# Fetch dataset from UCI repository
+wesad = fetch_ucirepo(id=465)
+
+# Access features and targets
+X = wesad.data.features
+y = wesad.data.targets</code></pre>
+        </div>
+
+        <div class="section" id="questions">
+            <h2>6. Answers to Key Questions</h2>
+
+            <h3>Q1: Do labels correspond to ACTUAL stress response or just task period?</h3>
+            <div class="warning-box">
+                <strong>Answer:</strong> Labels mark the <strong>experimental condition (task period)</strong> based on protocol timing, NOT the actual physiological stress response.
+
+                <h4>Implications:</h4>
+                <ul>
+                    <li>TSST is validated to induce stress, but labels don't track individual physiological onset/offset</li>
+                    <li>Delay exists between condition start and full physiological stress response</li>
+                    <li>Anticipatory stress begins during 10-minute preparation phase</li>
+                    <li>Peak stress likely occurs during speech/arithmetic tasks</li>
+                    <li>Recovery begins after TSST ends but extends into meditation periods</li>
+                </ul>
+            </div>
+
+            <h3>Q2: Is there delay between stress task onset and physiological response?</h3>
+            <div class="warning-box">
+                <strong>Answer: YES</strong> - Important considerations:
+
+                <h4>TSST Response Timeline:</h4>
+                <ul>
+                    <li><strong>Anticipatory stress:</strong> Builds during 10-min preparation</li>
+                    <li><strong>Acute stress:</strong> During 5-min speech + 5-min arithmetic</li>
+                    <li><strong>HRV changes:</strong> Occur within seconds to minutes (relatively fast)</li>
+                    <li><strong>Cortisol peak:</strong> 15-30 minutes after stressor onset (slower, not immediate)</li>
+                </ul>
+
+                <h4>Recommended Approach:</h4>
+                <ul>
+                    <li><strong>Exclude first 2-3 minutes</strong> of stress label for rule validation</li>
+                    <li><strong>Focus on speech/arithmetic period</strong> for peak stress response</li>
+                    <li>Consider <strong>transitions (label 0)</strong> as unreliable periods</li>
+                </ul>
+            </div>
+
+            <h3>Q3: Are there "high confidence" vs "low confidence" stress periods?</h3>
+            <div class="info-box">
+                <strong>Answer:</strong> Not explicitly labeled, but can be inferred.
+
+                <h4>High Confidence Stress:</h4>
+                <ul>
+                    <li>Middle of TSST speech/arithmetic tasks (after initial ramp-up)</li>
+                    <li>Subjects showing convergent signs: High HR, low HRV, elevated EDA</li>
+                    <li>Strong stress reactivity on questionnaires (STAI, PANAS)</li>
+                </ul>
+
+                <h4>Low Confidence / Ambiguous:</h4>
+                <ul>
+                    <li><strong>Label 0 (transient)</strong> - Explicitly marked as undefined/transitions</li>
+                    <li>First few minutes of condition changes (ramp-up period)</li>
+                    <li>End of stress/start of meditation (gradual recovery)</li>
+                    <li>Subjects with minimal TSST reactivity</li>
+                </ul>
+
+                <h4>Strategy:</h4>
+                <p>Use questionnaire data (STAI, PANAS) to identify high-responders and validate protocol effectiveness per subject.</p>
+            </div>
+
+            <h3>Q4: How do self-reported stress levels correlate with labels?</h3>
+            <div class="info-box">
+                <strong>Answer:</strong> Limited continuous correlation data available.
+
+                <ul>
+                    <li><strong>Questionnaires:</strong> STAI, PANAS, SAM administered before/after conditions</li>
+                    <li><strong>Purpose:</strong> Validate that protocol worked (stress condition increased anxiety/negative affect)</li>
+                    <li><strong>Not continuous:</strong> These are discrete measures, not real-time during recording</li>
+                    <li><strong>Use cases:</strong>
+                        <ul>
+                            <li>Exclude subjects with poor stress response</li>
+                            <li>Validate TSST effectiveness for each subject</li>
+                            <li>Identify high vs. low responders</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <h3>Q5: What percentage of data has motion artifacts or poor signal quality?</h3>
+            <div class="success-box">
+                <strong>Answer:</strong> No explicit quality metrics provided, but favorable conditions:
+
+                <h4>Quality Advantages:</h4>
+                <ul>
+                    <li><strong>Lab setting:</strong> Controlled environment minimizes motion</li>
+                    <li><strong>TSST activities:</strong> Mostly stationary (sitting/standing, speaking, mental math)</li>
+                    <li><strong>Chest device:</strong> More stable than wrist, less motion-sensitive</li>
+                </ul>
+
+                <h4>Wrist Device Challenges:</h4>
+                <ul>
+                    <li>Hand gestures during speech may introduce artifacts</li>
+                    <li>Low sampling rate (4 Hz EDA, 64 Hz BVP) limits some analyses</li>
+                    <li>PPG more susceptible to motion than chest ECG</li>
+                </ul>
+
+                <h4>Recommendations:</h4>
+                <ul>
+                    <li>Visually inspect each subject's data before use</li>
+                    <li>Check for outliers in HR/HRV metrics</li>
+                    <li>Use label 0 (transient) as natural exclusion zones</li>
+                    <li>Use accelerometer data to detect/exclude motion periods</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section" id="extraction">
+            <h2>7. Data Extraction Plan</h2>
+
+            <h3>Step 1: Download and Setup</h3>
+            <pre><code># Option 1: UCI Package
+from ucimlrepo import fetch_ucirepo
+wesad = fetch_ucirepo(id=465)
+
+# Option 2: Direct download
+# Download from: https://uni-siegen.sciebo.de/s/HGdUkoNlW1Ub0Gx
+# Unzip to: ./data/WESAD/</code></pre>
+
+            <h3>Step 2: Load Subject Data</h3>
+            <pre><code>import pickle
+import numpy as np
+
+def load_wesad_subject(subject_id):
+    """Load WESAD data for a single subject."""
+    filepath = f'./data/WESAD/{subject_id}/{subject_id}.pkl'
+
+    with open(filepath, 'rb') as f:
+        data = pickle.load(f, encoding='latin1')
+
+    return data
+
+# Available subjects (15 total)
+SUBJECT_IDS = ['S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9',
+               'S10', 'S11', 'S13', 'S14', 'S15', 'S16', 'S17']</code></pre>
+
+            <h3>Step 3: Extract Synchronized PPG and Labels</h3>
+            <pre><code>def extract_wrist_ppg_with_labels(data):
+    """Extract wrist PPG (BVP) and corresponding labels."""
+    # Extract wrist BVP (blood volume pulse / PPG)
+    ppg = data['signal']['wrist']['BVP']  # Shape: (n_samples,)
+
+    # Extract labels (originally 700 Hz)
+    labels_700hz = data['label']
+
+    # Downsample labels from 700 Hz to 64 Hz (BVP rate)
+    downsample_factor = int(700 / 64)
+    labels_64hz = labels_700hz[::downsample_factor][:len(ppg)]
+
+    return ppg, labels_64hz
+
+def extract_chest_ecg_with_labels(data):
+    """Extract chest ECG and labels (both at 700 Hz)."""
+    ecg = data['signal']['chest']['ECG']
+    labels = data['label']
+
+    # Ensure same length
+    min_len = min(len(ecg), len(labels))
+    return ecg[:min_len], labels[:min_len]</code></pre>
+
+            <h3>Step 4: Identify Clean Stress/Baseline Segments</h3>
+            <pre><code>def extract_clean_segments(ppg, labels, fs=64,
+                          exclude_transient=True,
+                          exclude_start_sec=180):
+    """
+    Extract clean baseline and stress segments.
+
+    Args:
+        ppg: PPG signal
+        labels: Corresponding labels
+        fs: Sampling frequency (Hz)
+        exclude_start_sec: Exclude first N seconds after condition starts
+
+    Returns:
+        segments: dict with 'baseline', 'stress', 'amusement' as keys
+    """
+    segments = {'baseline': [], 'stress': [], 'amusement': []}
+
+    # Find continuous regions for each label
+    for target_label, segment_name in [(1, 'baseline'),
+                                       (2, 'stress'),
+                                       (3, 'amusement')]:
+        mask = (labels == target_label)
+
+        # Find continuous segments
+        changes = np.diff(np.concatenate(([0], mask.astype(int), [0])))
+        starts = np.where(changes == 1)[0]
+        ends = np.where(changes == -1)[0]
+
+        for start, end in zip(starts, ends):
+            # Exclude first 3 minutes (180 sec) to avoid ramp-up
+            if exclude_start_sec > 0:
+                start_offset = int(exclude_start_sec * fs)
+                start = start + start_offset
+
+            if start < end:
+                segment = ppg[start:end]
+                segments[segment_name].append({
+                    'signal': segment,
+                    'start_idx': start,
+                    'end_idx': end,
+                    'duration_sec': (end - start) / fs
+                })
+
+    return segments</code></pre>
+
+            <h3>Step 5: Create Train/Test Splits (Subject-Independent)</h3>
+            <pre><code>from sklearn.model_selection import train_test_split
+
+def create_subject_splits(subject_ids, test_size=0.3, random_state=42):
+    """Split subjects into train/test ensuring subject independence."""
+    train_subjects, test_subjects = train_test_split(
+        subject_ids,
+        test_size=test_size,
+        random_state=random_state
+    )
+
+    print(f"Train subjects (n={len(train_subjects)}): {train_subjects}")
+    print(f"Test subjects (n={len(test_subjects)}): {test_subjects}")
+
+    return train_subjects, test_subjects
+
+# Example split: 11 train, 4 test
+TRAIN_SUBJECTS, TEST_SUBJECTS = create_subject_splits(SUBJECT_IDS)</code></pre>
+
+            <h3>Step 6: Quality Control and Subject Selection</h3>
+            <pre><code>def assess_data_quality(data):
+    """Check data quality indicators for a subject."""
+    ppg = data['signal']['wrist']['BVP']
+    labels = data['label']
+
+    # Count samples per condition
+    label_counts = {
+        'baseline': np.sum(labels == 1),
+        'stress': np.sum(labels == 2),
+        'amusement': np.sum(labels == 3),
+        'meditation': np.sum(labels == 4),
+        'transient': np.sum(labels == 0)
+    }
+
+    # Check for missing data
+    ppg_quality = {
+        'has_nan': np.any(np.isnan(ppg)),
+        'pct_zero': np.sum(ppg == 0) / len(ppg) * 100,
+        'mean': np.mean(ppg),
+        'std': np.std(ppg)
+    }
+
+    return {
+        'label_counts': label_counts,
+        'ppg_quality': ppg_quality,
+        'subject_id': data['subject']
+    }</code></pre>
+        </div>
+
+        <div class="section" id="validation">
+            <h2>8. Validation Strategy</h2>
+
+            <h3>Objective 1: Wrist vs. Chest HRV Comparison</h3>
+
+            <div class="info-box">
+                <strong>Goal:</strong> Validate wrist PPG-derived HRV against chest ECG ground truth
+            </div>
+
+            <h4>HRV Metrics to Compare</h4>
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th>Description</th>
+                    <th>Unit</th>
+                </tr>
+                <tr>
+                    <td><strong>Mean HR</strong></td>
+                    <td>Average heart rate</td>
+                    <td>bpm</td>
+                </tr>
+                <tr>
+                    <td><strong>RMSSD</strong></td>
+                    <td>Root mean square of successive differences</td>
+                    <td>ms</td>
+                </tr>
+                <tr>
+                    <td><strong>pNN50</strong></td>
+                    <td>Percentage of intervals differing by > 50ms</td>
+                    <td>%</td>
+                </tr>
+            </table>
+
+            <h4>Validation Metrics</h4>
+            <ul>
+                <li><strong>Pearson correlation:</strong> r > 0.7 indicates good agreement</li>
+                <li><strong>Bland-Altman plot:</strong> Check bias and limits of agreement</li>
+                <li><strong>MAPE:</strong> Mean Absolute Percentage Error < 15% acceptable</li>
+            </ul>
+
+            <h3>Objective 2: Rule-Based Threshold Evaluation</h3>
+
+            <h4>Proposed Thresholds (Literature-Based)</h4>
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th>Baseline Range</th>
+                    <th>Stress Threshold</th>
+                    <th>Direction</th>
+                </tr>
+                <tr>
+                    <td><strong>RMSSD</strong></td>
+                    <td>> 30 ms</td>
+                    <td>< 30 ms</td>
+                    <td>↓ Decrease</td>
+                </tr>
+                <tr>
+                    <td><strong>Mean HR</strong></td>
+                    <td>60-80 bpm</td>
+                    <td>> 85 bpm<br>(or +5 bpm from baseline)</td>
+                    <td>↑ Increase</td>
+                </tr>
+                <tr>
+                    <td><strong>pNN50</strong></td>
+                    <td>> 20%</td>
+                    <td>< 10%</td>
+                    <td>↓ Decrease</td>
+                </tr>
+            </table>
+
+            <h4>Rule-Based Classifier (Majority Vote)</h4>
+            <pre><code>def rule_based_stress_classifier(hrv_metrics, baseline_hr):
+    """
+    Simple threshold-based stress classification.
+
+    Args:
+        hrv_metrics: dict with 'mean_hr', 'rmssd', 'pnn50'
+        baseline_hr: Subject's baseline mean HR (personalized)
+
+    Returns:
+        'stress' or 'no-stress'
+    """
+    stress_votes = 0
+
+    # Rule 1: RMSSD < 30 ms
+    if hrv_metrics['rmssd'] < 30:
+        stress_votes += 1
+
+    # Rule 2: HR increase > 5 bpm from baseline
+    if hrv_metrics['mean_hr'] > (baseline_hr + 5):
+        stress_votes += 1
+
+    # Rule 3: pNN50 < 10%
+    if hrv_metrics['pnn50'] < 10:
+        stress_votes += 1
+
+    # Decision: Majority vote (2/3 rules)
+    return 'stress' if stress_votes >= 2 else 'no-stress'</code></pre>
+
+            <h4>Performance Metrics</h4>
+            <ul>
+                <li><strong>Accuracy:</strong> Overall correct classification rate</li>
+                <li><strong>Sensitivity (Recall):</strong> True stress detection rate</li>
+                <li><strong>Specificity:</strong> True non-stress detection rate</li>
+                <li><strong>Precision:</strong> Accuracy of stress predictions</li>
+                <li><strong>F1-Score:</strong> Harmonic mean of precision and recall</li>
+            </ul>
+
+            <h3>Objective 3: Handling Edge Cases</h3>
+
+            <h4>Transitions</h4>
+            <ul>
+                <li><strong>Exclude label 0</strong> (transient) entirely</li>
+                <li><strong>Exclude first 3 minutes</strong> of each condition (ramp-up)</li>
+                <li><strong>Exclude last 1 minute</strong> before transitions</li>
+            </ul>
+
+            <h4>Motion Periods</h4>
+            <ul>
+                <li>Use <strong>accelerometer data</strong> to detect movement</li>
+                <li><strong>Threshold:</strong> If 3-axis ACC magnitude changes > 0.2g, flag as motion</li>
+                <li><strong>Strategy:</strong> Exclude motion windows or use motion-robust features</li>
+            </ul>
+
+            <h4>Ambiguous Labels</h4>
+            <ul>
+                <li>Focus on <strong>high-confidence periods:</strong>
+                    <ul>
+                        <li>Middle of stress (minutes 3-10 of speech/arithmetic)</li>
+                        <li>Baseline minutes 5-15 (after settling)</li>
+                    </ul>
+                </li>
+                <li>Cross-validate with <strong>questionnaire scores</strong> (high STAI = clear response)</li>
+            </ul>
+
+            <h3>Objective 4: Real-Time Simulation (Sliding Windows)</h3>
+
+            <h4>Window Configuration</h4>
+            <ul>
+                <li><strong>Window duration:</strong> 30 seconds (real-time feasible)</li>
+                <li><strong>Overlap:</strong> 15 seconds (50% overlap for smoother detection)</li>
+                <li><strong>Processing:</strong> Compute HRV metrics per window</li>
+                <li><strong>Decision:</strong> Majority label in window = ground truth</li>
+            </ul>
+        </div>
+
+        <div class="section" id="code">
+            <h2>9. Code Structure Recommendations</h2>
+
+            <h3>Modular Architecture</h3>
+            <pre><code>wesad_stress_detection/
+│
+├── data/
+│   ├── WESAD/                     # Downloaded dataset
+│   │   ├── S2/
+│   │   ├── S3/
+│   │   └── ...
+│   └── processed/                 # Preprocessed data
+│       ├── train/
+│       └── test/
+│
+├── src/
+│   ├── __init__.py
+│   │
+│   ├── data_loader.py             # Module 1: Load WESAD pickle files
+│   │   ├── load_wesad_subject()
+│   │   ├── extract_wrist_ppg_with_labels()
+│   │   ├── extract_chest_ecg_with_labels()
+│   │   └── create_subject_splits()
+│   │
+│   ├── preprocessor.py            # Module 2: Signal preprocessing
+│   │   ├── filter_ppg()           # Bandpass filtering
+│   │   ├── filter_ecg()
+│   │   ├── normalize_signal()
+│   │   ├── detect_motion_artifacts()
+│   │   └── extract_clean_segments()
+│   │
+│   ├── feature_extractor.py      # Module 3: HRV feature extraction
+│   │   ├── compute_hrv_wrist()    # From PPG
+│   │   ├── compute_hrv_chest()    # From ECG (ground truth)
+│   │   ├── extract_rr_intervals()
+│   │   └── sliding_window_features()
+│   │
+│   ├── classifier.py              # Module 4: Rule-based classifier
+│   │   ├── rule_based_stress_classifier()
+│   │   ├── calibrate_thresholds() # Personalize to baseline
+│   │   └── majority_vote_classifier()
+│   │
+│   ├── validator.py               # Module 5: Validation
+│   │   ├── compare_wrist_chest_hrv()
+│   │   ├── evaluate_classifier()
+│   │   └── cross_validate_subjects()
+│   │
+│   └── analyzer.py                # Module 6: Performance analysis
+│       ├── compute_metrics()
+│       ├── plot_confusion_matrix()
+│       ├── plot_hrv_comparison()
+│       └── generate_report()
+│
+├── notebooks/
+│   ├── 01_data_exploration.ipynb
+│   ├── 02_signal_quality_check.ipynb
+│   ├── 03_hrv_extraction.ipynb
+│   ├── 04_rule_validation.ipynb
+│   └── 05_results_analysis.ipynb
+│
+├── tests/
+│   ├── test_data_loader.py
+│   ├── test_feature_extractor.py
+│   └── test_classifier.py
+│
+├── config.py                      # Configuration parameters
+├── requirements.txt               # Dependencies
+└── README.md</code></pre>
+
+            <h3>Required Dependencies</h3>
+            <pre><code>numpy>=1.21.0
+scipy>=1.7.0
+pandas>=1.3.0
+matplotlib>=3.4.0
+seaborn>=0.11.0
+scikit-learn>=0.24.0
+neurokit2>=0.2.0  # or heartpy, hrv-analysis
+pickle5>=0.0.11</code></pre>
+
+            <h3>Configuration Parameters</h3>
+            <pre><code># config.py
+
+# Dataset paths
+DATA_DIR = './data/WESAD'
+PROCESSED_DIR = './data/processed'
+
+# Subject IDs
+SUBJECT_IDS = ['S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9',
+               'S10', 'S11', 'S13', 'S14', 'S15', 'S16', 'S17']
+
+# Sampling rates
+FS_CHEST = 700  # Hz
+FS_WRIST_BVP = 64  # Hz
+FS_WRIST_EDA = 4  # Hz
+FS_WRIST_ACC = 32  # Hz
+
+# Label definitions
+LABELS = {
+    0: 'transient',
+    1: 'baseline',
+    2: 'stress',
+    3: 'amusement',
+    4: 'meditation'
+}
+
+# Analysis parameters
+WINDOW_SEC = 30  # Window duration
+OVERLAP_SEC = 15  # Window overlap
+EXCLUDE_START_SEC = 180  # Exclude first 3 min of each condition
+
+# Rule-based thresholds
+THRESHOLDS = {
+    'rmssd_stress': 30,      # ms
+    'hr_increase': 5,         # bpm above baseline
+    'pnn50_stress': 10        # %
+}
+
+# Train/test split
+TEST_SIZE = 0.3
+RANDOM_STATE = 42</code></pre>
+        </div>
+
+        <div class="section" id="summary">
+            <h2>10. Summary and Next Steps</h2>
+
+            <h3>Key Takeaways</h3>
+            <div class="success-box">
+                <ol>
+                    <li><strong>Protocol-based labels:</strong> WESAD provides experimental condition labels (not continuous physiological markers)</li>
+                    <li><strong>15 subjects:</strong> ~2 hour sessions with validated TSST stress induction</li>
+                    <li><strong>Dual validation:</strong> Chest ECG (700 Hz) = HRV ground truth, wrist PPG (64 Hz) = target validation</li>
+                    <li><strong>Exclude transitions:</strong> Remove label 0 and first 3 minutes of conditions</li>
+                    <li><strong>Questionnaires available:</strong> STAI, PANAS, SAM to assess stress reactivity</li>
+                </ol>
+            </div>
+
+            <h3>Recommended Implementation Order</h3>
+            <ol>
+                <li><strong>Download WESAD dataset</strong> from UCI repository</li>
+                <li><strong>Explore 2-3 subjects:</strong> Load pickle files, visualize signals, check labels</li>
+                <li><strong>Quality assessment:</strong> Run quality checks on all 15 subjects</li>
+                <li><strong>Extract clean segments:</strong> Baseline and stress periods (exclude transitions)</li>
+                <li><strong>Compute HRV metrics:</strong> Compare chest ECG vs wrist PPG</li>
+                <li><strong>Implement rule-based classifier:</strong> Test threshold-based detection</li>
+                <li><strong>Validate performance:</strong> Subject-independent cross-validation</li>
+                <li><strong>Refine thresholds:</strong> Personalize based on baseline calibration</li>
+            </ol>
+
+            <h3>Expected Outcomes</h3>
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th>Expected Range</th>
+                    <th>Interpretation</th>
+                </tr>
+                <tr>
+                    <td><strong>Wrist-Chest Correlation</strong></td>
+                    <td>r = 0.6 - 0.8</td>
+                    <td>Good agreement (lower during stress due to vasoconstriction)</td>
+                </tr>
+                <tr>
+                    <td><strong>Binary Classification</strong></td>
+                    <td>70 - 85% accuracy</td>
+                    <td>Stress vs. no-stress with simple threshold rules</td>
+                </tr>
+                <tr>
+                    <td><strong>Clinical Utility</strong></td>
+                    <td>-</td>
+                    <td>Validate wrist PPG can detect TSST-induced stress</td>
+                </tr>
+            </table>
+
+            <h3>Critical Considerations for Your Application</h3>
+            <div class="warning-box">
+                <h4>Target Population: Children with Self-Regulation Issues</h4>
+                <ul>
+                    <li><strong>Age difference:</strong> WESAD subjects are adults (24-35 years); child HRV metrics may differ</li>
+                    <li><strong>Baseline HR:</strong> Children typically have higher baseline HR than adults</li>
+                    <li><strong>Stress response:</strong> May need to adjust thresholds based on pediatric norms</li>
+                    <li><strong>Motion artifacts:</strong> Children likely to have more movement than lab study</li>
+                    <li><strong>Personalization:</strong> Individual baseline calibration will be critical</li>
+                </ul>
+            </div>
+
+            <h3>Future Enhancements</h3>
+            <ul>
+                <li>Collect pilot data from target population (children) to validate thresholds</li>
+                <li>Implement motion artifact detection and robust feature extraction</li>
+                <li>Develop personalized baseline calibration protocol (5-10 min resting period)</li>
+                <li>Test real-time implementation with 30-second sliding windows</li>
+                <li>Consider multi-modal features (EDA, temperature) for improved accuracy</li>
+                <li>Validate in free-living conditions (not just lab environment)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>References</h2>
+            <ul>
+                <li>Schmidt, P., Reiss, A., Duerichen, R., Marberger, C., & Van Laerhoven, K. (2018). <em>Introducing WESAD, a multimodal dataset for wearable stress and affect detection</em>. Proceedings of the 20th ACM International Conference on Multimodal Interaction, 400–408. <a href="https://dl.acm.org/doi/10.1145/3242969.3242985">https://dl.acm.org/doi/10.1145/3242969.3242985</a></li>
+                <li>UCI Machine Learning Repository: WESAD Dataset. <a href="https://doi.org/10.24432/C57K5T">https://doi.org/10.24432/C57K5T</a></li>
+                <li>Direct Download: <a href="https://uni-siegen.sciebo.de/s/HGdUkoNlW1Ub0Gx">https://uni-siegen.sciebo.de/s/HGdUkoNlW1Ub0Gx</a></li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>Report Generated: October 2025</p>
+            <p>WESAD Dataset Analysis for Rule-Based Stress Detection Model Development</p>
+            <p>Milwaukee School of Engineering - Senior Design Project</p>
+        </div>
+    </div>
+</body>
+</html>
