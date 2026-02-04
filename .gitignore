@@ -75,3 +75,7 @@ results/
 tmp/
 temp/
 *.tmp
+
+# Local environment (machine-specific paths, secrets)
+.env
+.env.local

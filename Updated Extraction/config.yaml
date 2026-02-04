@@ -1,0 +1,55 @@
+# WESAD Feature Extraction Pipeline - Configuration (commit this file)
+# Dataset path: set WESAD_PATH in .env (repo root or Updated Extraction/) per machine; else defaults to dataset/raw.
+
+reproducibility:
+  random_seed: 42
+
+paths:
+  wesad_path: null  # Filled by WESAD_PATH (.env / env) or default repo dataset/raw
+  output_dir: "output"
+  output_file: "all_subject_features_updated.csv"
+
+subjects:
+  include:
+    - S2
+    - S3
+    - S4
+    - S5
+    - S6
+    - S7
+    - S8
+    - S9
+    - S10
+    - S11
+    - S13
+    - S15
+    - S16
+    - S17
+  exclude:
+    - S14
+
+sampling_rates:
+  eda: 4
+  bvp: 64
+  temp: 4
+  acc: 32
+  label: 700
+
+windowing:
+  window_size: 60
+  step_size: 60
+
+eda:
+  peak_threshold: 0.01   # μS (clinical standard for wrist)
+  outlier_min: 0.01      # μS (physiological minimum)
+  outlier_max: 1.0       # μS (physiological maximum)
+
+tsst:
+  prep_duration: 180     # seconds (3 minutes)
+
+labels:
+  mapping:
+    1: non-stress   # baseline
+    2: stress       # TSST
+    3: non-stress   # amusement
+    4: non-stress   # meditation

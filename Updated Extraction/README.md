@@ -20,14 +20,33 @@ This folder contains a **modular, well-commented** WESAD wrist feature-extractio
 - A CSV dataset (raw + normalized features)
 - A small JSON run manifest (counts, feature list, config)
 
+## Configuration
+
+The pipeline is **configurable** and **reproducible**:
+
+- **Commit `config.yaml`:** Yes. Keep `config.yaml` in version control; it has no machine-specific paths (`paths.wesad_path` is left unset in the file).
+- **Per-machine path via .env:** Copy `.env.example` to `.env` in the **repo root** (or in `Updated Extraction/`) and set `WESAD_PATH` to your local WESAD directory. `.env` is gitignored so each developer can have their own path without editing shared config.
+- **Config file:** `config.yaml` in this folder overrides other defaults (subjects, window size, etc.). If missing or invalid, built-in defaults are used.
+- **Path priority:** `WESAD_PATH` from `.env` or shell → `paths.wesad_path` in `config.yaml` → default `dataset/raw` relative to repo root.
+- **Random seed:** Set `reproducibility.random_seed` in `config.yaml` (default `42`) for reproducibility; recorded in the run manifest.
+
 ## How to run
 
 From repo root:
 
 ```bash
+# Optional: one-time setup so the pipeline finds your WESAD data
+cp .env.example .env
+# Edit .env and set WESAD_PATH to your WESAD folder (e.g. C:\...\WESAD or /path/to/WESAD)
+
 python "Updated Extraction/dataset_builder.py"
 ```
 
-You must have WESAD `.pkl` files available at the configured `WESAD_PATH` (edit the constant at top of `dataset_builder.py`).
+You must have WESAD `.pkl` files available. Set the path in one of these ways (first wins):
+
+1. **Recommended:** Put `WESAD_PATH=...` in a `.env` file at the repo root (or in `Updated Extraction/`).
+2. Set the `WESAD_PATH` environment variable in your shell.
+3. Set `paths.wesad_path` in `Updated Extraction/config.yaml` (if you prefer not to use .env).
+4. If unset, the default is `dataset/raw` relative to the repo (use this layout if you want no config).
 
 
