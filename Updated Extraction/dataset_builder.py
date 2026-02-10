@@ -32,7 +32,10 @@ import warnings
 import json
 from datetime import datetime
 
-warnings.filterwarnings('ignore')
+# Suppress known-noisy warnings from dependencies; keep data-quality warnings visible
+warnings.filterwarnings('ignore', category=FutureWarning)
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+warnings.filterwarnings('ignore', module='neurokit2')
 
 # Import our modules
 from features import (
@@ -326,7 +329,7 @@ def main():
     final_df = pd.concat(all_subject_features, ignore_index=True)
 
     # Reorder columns: features first, then metadata
-    metadata_cols = ["label", "subject_id", "window_idx", "raw_label"]
+    metadata_cols = ["label", "subject_id", "window_idx", "raw_label", "hrv_valid", "hrv_n_peaks"]
     feature_cols = [col for col in final_df.columns if col not in metadata_cols]
     final_df = final_df[feature_cols + metadata_cols]
 

@@ -71,7 +71,7 @@ def calculate_baseline_stats(subject_df, raw_labels):
         return {}
     
     # Get all feature columns (exclude label, subject_id, raw_label)
-    exclude_cols = ['label', 'subject_id', 'raw_label', 'window_idx']
+    exclude_cols = ['label', 'subject_id', 'raw_label', 'window_idx', 'hrv_valid', 'hrv_n_peaks']
     feature_cols = [col for col in subject_df.columns 
                     if col not in exclude_cols 
                     and not col.endswith(('_percent_change', '_z_score'))]
@@ -101,7 +101,7 @@ def add_normalized_features(subject_df, baseline_stats):
     normalized_df = subject_df.copy()
     
     # Get all feature columns (exclude metadata)
-    exclude_cols = ['label', 'subject_id', 'raw_label', 'window_idx']
+    exclude_cols = ['label', 'subject_id', 'raw_label', 'window_idx', 'hrv_valid', 'hrv_n_peaks']
     feature_cols = [col for col in subject_df.columns 
                     if col not in exclude_cols
                     and not col.endswith(('_percent_change', '_z_score'))]

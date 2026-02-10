@@ -111,8 +111,8 @@ def extract_eda_features_window(eda_window, fs, peak_threshold=0.01,
         scr_amplitudes = peaks_info['SCR_Amplitude']
         scr_rise_times = peaks_info['SCR_RiseTime']
         scr_recovery_times = peaks_info['SCR_Recovery']
-    except:
-        # No peaks found
+    except (ValueError, KeyError, IndexError, TypeError) as e:
+        # No peaks found or peak detection failed
         scr_peak_indices = np.array([])
         scr_amplitudes = np.array([])
         scr_rise_times = np.array([])
@@ -228,28 +228,32 @@ def extract_hrv_features_window(bvp_window, fs):
         'hrv_vlf_power': 0.0,
         'hrv_total_power': 0.0,
         'hrv_sd1': 0.0,
+        'hrv_valid': 0,
+        'hrv_n_peaks': 0,
     }
-    
+
     try:
         # Clean BVP signal and detect peaks using NeuroKit2
         ppg_signals, info = nk.ppg_process(bvp_window, sampling_rate=fs)
         peaks = info['PPG_Peaks']
-        
+
         # Need at least 2 peaks to calculate HRV
         if len(peaks) < 2:
+            print(f"    HRV WARNING: Only {len(peaks)} peak(s) detected, need >= 2. Returning defaults.")
+            default_features['hrv_n_peaks'] = len(peaks)
             return default_features
-        
+
         # Calculate HRV metrics using NeuroKit2
         hrv_time = nk.hrv_time(peaks, sampling_rate=fs, show=False)
         hrv_freq = nk.hrv_frequency(peaks, sampling_rate=fs, show=False)
         hrv_nonlinear = nk.hrv_nonlinear(peaks, sampling_rate=fs, show=False)
-        
+
         # Extract time-domain features (9)
         # FIXED: Calculate actual heart rate from MeanNN
         # MeanNN is in milliseconds, HR = 60000 / MeanNN
         mean_nn = hrv_time['HRV_MeanNN'].values[0] if 'HRV_MeanNN' in hrv_time.columns else 0.0
         hrv_mean_hr = 60000.0 / mean_nn if mean_nn > 0 else 0.0  # CORRECTED
-        
+
         features = {
             'hrv_mean_hr': hrv_mean_hr,  # Now correctly in BPM
             'hrv_rmssd': hrv_time['HRV_RMSSD'].values[0] if 'HRV_RMSSD' in hrv_time.columns else 0.0,
@@ -261,7 +265,7 @@ def extract_hrv_features_window(bvp_window, fs):
             'hrv_min_rr': hrv_time['HRV_MinNN'].values[0] if 'HRV_MinNN' in hrv_time.columns else 0.0,
             'hrv_max_rr': hrv_time['HRV_MaxNN'].values[0] if 'HRV_MaxNN' in hrv_time.columns else 0.0,
         }
-        
+
         # Extract frequency-domain features (5)
         features.update({
             'hrv_lf_power': hrv_freq['HRV_LF'].values[0] if 'HRV_LF' in hrv_freq.columns else 0.0,
@@ -270,14 +274,18 @@ def extract_hrv_features_window(bvp_window, fs):
             'hrv_vlf_power': hrv_freq['HRV_VLF'].values[0] if 'HRV_VLF' in hrv_freq.columns else 0.0,
             'hrv_total_power': hrv_freq['HRV_TP'].values[0] if 'HRV_TP' in hrv_freq.columns else 0.0,
         })
-        
+
         # Extract non-linear feature (1)
         features['hrv_sd1'] = hrv_nonlinear['HRV_SD1'].values[0] if 'HRV_SD1' in hrv_nonlinear.columns else 0.0
-        
+
+        # Mark as valid with peak count
+        features['hrv_valid'] = 1
+        features['hrv_n_peaks'] = len(peaks)
+
         return features
-        
+
     except Exception as e:
-        # If HRV extraction fails for this window, return defaults
+        print(f"    HRV WARNING: Extraction failed ({type(e).__name__}: {e}). Returning defaults.")
         return default_features
 
 
