@@ -1,6 +1,6 @@
 # Processed Data
 
-Windowed and cleaned feature data ready for machine learning.
+WESAD causal features extracted with 60 and 30 second stride windows
 
 ## Contents
 
