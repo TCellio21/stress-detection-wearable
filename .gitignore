@@ -30,15 +30,15 @@ ENV/
 *.ipynb_checkpoints/
 
 # Data (large files)
-data/
-*.pkl
-*.csv
-*.zip
-*.edf
-*.npy
-*.npz
-*.h5
-*.parquet
+# data/
+# *.pkl
+# *.csv
+# *.zip
+# *.edf
+# *.npy
+# *.npz
+# *.h5
+# *.parquet
 
 # Dataset - ignore raw data but keep READMEs
 dataset/raw/S*/
@@ -69,7 +69,7 @@ Thumbs.db
 logs/
 
 # Results (ignore entire results directory)
-results/
+# results/
 
 # Temporary files
 tmp/
@@ -81,6 +81,8 @@ temp/
 .env.local
 
 # Local-only documentation and context
-*.md
-grant/
-/Updated Extraction/Hyperparameter Tuning/
+# *.md
+# grant/
+# Updated Extraction/Hyperparameter Tuning/
+# EDA notebook cache (large intermediate files, recomputed on demand)
+EDA/cache/

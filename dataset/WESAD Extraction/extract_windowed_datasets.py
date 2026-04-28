@@ -5,6 +5,7 @@ Supports sliding windows, decoupled HRV extraction (3 min freq, 1 min time),
 Causal EDA alignment (6.4s shift), and dual dataset generation (30s and 60s strides).
 """
 
+import os
 import pickle
 import numpy as np
 if not hasattr(np, "trapz"):
@@ -13,6 +14,7 @@ import pandas as pd
 import neurokit2 as nk
 from scipy import stats, signal
 from pathlib import Path
+from dotenv import load_dotenv
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -20,8 +22,20 @@ warnings.filterwarnings('ignore')
 # CONFIGURATION
 # =====================================================================
 
-WESAD_PATH = r"C:\Users\gloriosog\OneDrive - Milwaukee School of Engineering\Year 4 Courses\Semester 1\Senior Design\WESAD Dataset\WESAD2\WESAD"
-OUTPUT_DIR = Path(__file__).resolve().parent
+# Load .env from repo root, then this script's folder (matches Updated Extraction pipeline)
+_SCRIPT_DIR = Path(__file__).resolve().parent
+_REPO_ROOT = _SCRIPT_DIR.parents[1]  # script is at <repo>/dataset/WESAD Extraction/
+load_dotenv(_REPO_ROOT / ".env")
+load_dotenv(_SCRIPT_DIR / ".env")
+
+WESAD_PATH = os.environ.get("WESAD_PATH")
+if not WESAD_PATH:
+    raise RuntimeError(
+        "WESAD_PATH not set. Copy .env.example to .env at the repo root "
+        "and set WESAD_PATH=/path/to/WESAD"
+    )
+
+OUTPUT_DIR = _SCRIPT_DIR
 
 SUBJECTS = ['S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 
             'S13', 'S14', 'S15', 'S16', 'S17']
