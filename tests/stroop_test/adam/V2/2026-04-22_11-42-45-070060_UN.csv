@@ -1,0 +1,4 @@
+LocalTimestamp,EmotiBitTimestamp,PacketNumber,DataLength,TypeTag,ProtocolVersion,DataReliability,UN
+1776876225.000000,425401,2002,2,UN,1,100,Intial phase
+1776876532.000000,732110,52439,2,UN,1,100,baseline
+1776876646.000000,845806,5614,2,UN,1,100,End stress
