@@ -1,0 +1,4 @@
+subject,n_eda_samples,pct_electrode_off,n_temp_samples,pct_temp_dropout,n_ibis,pct_ectopic_corrected,n_windows,pct_motion_corrupted,median_hr_raw,median_hr_corrected,n_scr_peaks,jerk_p95_baseline_median,jerk_p95_stress_median,pct_baseline_flagged,pct_stress_flagged
+S2,24316,0.0,24316,0.0,6992,35.3,101,21.8,69.8,71.1,322,3.2,2.43,5.3,0.0
+S10,21984,0.0,21984,0.0,7592,22.3,91,5.5,89.3,89.3,232,2.87,2.54,0.0,16.7
+S16,22524,0.0,22524,0.0,6774,33.3,93,3.2,76.8,78.4,694,2.74,3.08,0.0,0.0

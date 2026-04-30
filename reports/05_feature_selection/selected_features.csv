@@ -1,0 +1,13 @@
+feature
+scr_recovery_time_mean
+hrv_median_rr
+scr_peak_count
+scl_range
+hrv_pnn50
+scl_max
+temp_slope
+temp_max
+hrv_sdsd
+acc_jerk_mag_mean
+hrv_min_rr
+acc_y_std

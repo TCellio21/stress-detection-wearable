@@ -1,0 +1,78 @@
+# V3 — Causal real-time-deployable WESAD wrist pipeline.
+# Per-machine WESAD path goes in .env (WESAD_PATH); see config_loader.py.
+
+reproducibility:
+  random_seed: 42
+
+paths:
+  wesad_path: null   # filled by WESAD_PATH env var; defaults to repo dataset/raw
+  output_dir: "output"
+  output_file: "v3_features.csv"
+
+subjects:
+  include:
+    - S2
+    - S3
+    - S4
+    - S5
+    - S6
+    - S7
+    - S8
+    - S9
+    - S10
+    - S11
+    - S13
+    - S15
+    - S16
+    - S17
+  exclude:
+    - S14   # hyporesponsive; per project memory + V1 convention
+
+sampling_rates:
+  eda: 4
+  bvp: 64
+  temp: 4
+  acc: 32
+  label: 700
+
+# Phase 2 picked W=60s, step=60s (non-overlapping). See docs/02_windowing.md §3.4.
+windowing:
+  window_size: 60
+  step_size: 60
+  hrv_freq_window: 180   # decoupled longer window for HRV freq-domain (Task Force 1996 recommends >=120 s); used in Phase 3+
+
+# Preprocessing — see docs/01_preprocessing.md for citations and rationale.
+preprocessing:
+  eda:
+    presmooth_cutoff_hz: 1.0     # remove sensor noise above SCR band
+    presmooth_order: 1
+    band_cutoff_hz: 0.05         # SCL/SCR boundary (Boucsein 2012)
+    band_order: 2
+    group_delay_seconds: 6.4     # = order-2 IIR at fc=0.05 Hz, fs=4 Hz; intentional startup latency
+    electrode_off_min_us: 0.05   # below this for >= flat_seconds is electrode-off (Boucsein 2012)
+    electrode_off_flat_seconds: 5.0
+    scr_amplitude_min_us: 0.01   # clinical lower bound (Boucsein 2012)
+    scr_amplitude_max_us: 1.0    # physiological upper bound for wrist
+  bvp:
+    band_low_hz: 0.5             # Elgendi 2013, Schmidt 2018
+    band_high_hz: 8.0
+    order: 3
+    motion_jerk_threshold_g_per_s: 8.0     # 95th-percentile jerk magnitude over window; provisional, Phase 2 will tune
+    ectopic_deviation_pct: 20.0            # IBIs > 20% off local median get corrected
+    ectopic_lookback_beats: 5              # causal: median over last N beats only
+  temp:
+    smoothing_cutoff_hz: 0.5
+    smoothing_order: 1
+    max_step_celsius: 1.0        # > 1 C / sample (0.25 s) is unphysical, sensor disconnect
+  acc:
+    raw_to_g_divisor: 64.0       # WESAD E4 stores 1/64 g; convert to g
+    activity_cutoff_hz: 3.0      # separates ambulation (<3 Hz) from fidgeting (>3 Hz)
+    activity_order: 2
+
+labels:
+  mapping:
+    1: non-stress   # baseline
+    2: stress       # TSST
+    3: non-stress   # amusement
+    4: non-stress   # meditation
+  # NOTE: V3 keeps all stress windows; no TSST-prep-drop (per 2026-04-29 user decision).
