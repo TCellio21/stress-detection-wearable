@@ -82,7 +82,7 @@ temp/
 
 # Local-only documentation and context
 # *.md
-# grant/
+grant/
 # Updated Extraction/Hyperparameter Tuning/
 # EDA notebook cache (large intermediate files, recomputed on demand)
 EDA/cache/
