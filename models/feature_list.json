@@ -1,0 +1,23 @@
+{
+  "features": [
+    "scr_recovery_time_mean",
+    "hrv_median_rr",
+    "scr_peak_count",
+    "hrv_pnn50",
+    "scl_max",
+    "hrv_sdsd",
+    "scl_range",
+    "scr_amplitude_sum",
+    "temp_max",
+    "hrv_min_rr",
+    "acc_jerk_mag_mean",
+    "temp_slope",
+    "scr_rise_time_mean",
+    "acc_magnitude_std",
+    "scr_amplitude_max",
+    "acc_y_std"
+  ],
+  "count": 16,
+  "description": "Locked 16-feature set from Phase 5 combined-rank selection.",
+  "source": "reports/05_feature_selection/selected_features.csv"
+}

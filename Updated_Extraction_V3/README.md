@@ -16,9 +16,9 @@ extend them.
 | 2 — Windowing/step sweep | ✅ | [features.py](features.py), [dataset_builder.py](dataset_builder.py), [run_phase2_experiment.py](run_phase2_experiment.py), [docs/02_windowing.md](../docs/02_windowing.md), [reports/02_windowing/](../reports/02_windowing/). Locked: **W=60s, step=60s**. RF baseline F1=0.776. |
 | 3 — Feature extraction | (features.py exists; doc + tests pending) | |
 | 4 — Normalization comparison | ✅ | [notebooks/04_normalization.ipynb](../notebooks/04_normalization.ipynb), [docs/04_normalization.md](../docs/04_normalization.md), [reports/04_normalization/](../reports/04_normalization/). Locked: **raw features (no normalization), decoupled HRV time/freq windows**. HGB F1=0.933, no subjects below 0.5 recall. S2 (0.90), S17 (1.00) recovered; S3 partial (0.73). |
-| 5 — Feature selection | pending — notebook | |
-| 6 — Model selection | pending — notebook | |
-| 7 — Hyperparameter tuning | pending — notebook | |
+| 5 — Feature selection | ✅ | [notebooks/05_feature_selection.ipynb](../notebooks/05_feature_selection.ipynb), [docs/05_feature_selection.md](../docs/05_feature_selection.md), [reports/05_feature_selection/](../reports/05_feature_selection/). Locked: **combined-rank top-16 features** (avg of stability rank and SHAP rank). HGB F1=0.931, no subjects below 0.5 recall. 67% feature reduction from 48 → 16. |
+| 6 — Model selection | ✅ | [notebooks/06_model_selection.ipynb](../notebooks/06_model_selection.ipynb), [docs/06_model_selection.md](../docs/06_model_selection.md), [reports/06_model_selection/](../reports/06_model_selection/). Locked: **HGB at threshold 0.5** (F1=0.931, recall=0.911). LightGBM as deployment fallback (1.4ms inference vs HGB's 10ms, F1=0.921). |
+| 7 — Hyperparameter tuning | ✅ | [notebooks/07_hyperparameter_tuning.ipynb](../notebooks/07_hyperparameter_tuning.ipynb), [docs/07_hyperparameter_tuning.md](../docs/07_hyperparameter_tuning.md), [reports/07_hyperparameter_tuning/](../reports/07_hyperparameter_tuning/), [models/](../models/). Nested-LOSO Optuna unbiased F1=0.917 (Δ -0.014 vs default; +0.091 on S9). **Recommended ship: HGB+SVM-RBF ensemble** (F1=0.935, **S3 recovered to 0.727**). |
 | 8 — Real-time simulator | pending | |
 | 9 — Defense doc | pending | |
 

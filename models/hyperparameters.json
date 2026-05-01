@@ -1,0 +1,36 @@
+{
+  "model_class": "HistGradientBoostingClassifier",
+  "hyperparameters": {
+    "learning_rate": 0.09202539840525675,
+    "max_iter": 752,
+    "max_depth": 6,
+    "min_samples_leaf": 9,
+    "l2_regularization": 0.06116434064531187,
+    "max_leaf_nodes": 92,
+    "max_features": 0.5999672777532219
+  },
+  "feature_list": [
+    "scr_recovery_time_mean",
+    "hrv_median_rr",
+    "scr_peak_count",
+    "hrv_pnn50",
+    "scl_max",
+    "hrv_sdsd",
+    "scl_range",
+    "scr_amplitude_sum",
+    "temp_max",
+    "hrv_min_rr",
+    "acc_jerk_mag_mean",
+    "temp_slope",
+    "scr_rise_time_mean",
+    "acc_magnitude_std",
+    "scr_amplitude_max",
+    "acc_y_std"
+  ],
+  "threshold": 0.5,
+  "random_state": 42,
+  "class_weight": "balanced",
+  "phase_6_baseline_f1": 0.931297957779603,
+  "phase_7_nested_loso_f1": 0.917359470103831,
+  "phase_7_nested_loso_min_recall": 0.6363636363636364
+}
